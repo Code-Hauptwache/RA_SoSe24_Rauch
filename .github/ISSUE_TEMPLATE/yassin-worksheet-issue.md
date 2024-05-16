@@ -1,9 +1,9 @@
 ---
-name: Worksheet issue
-about: Suggest a ticket to the project
+name: Yassin Worksheet issue
+about: 'Yassin''s RA Worksheet '
 title: ''
 labels: ''
-assignees: ''
+assignees: Yassin561
 
 ---
 
