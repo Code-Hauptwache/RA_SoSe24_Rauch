@@ -1,5 +1,5 @@
 ---
-name: Yassin Worksheet issue
+name: Yassin RA Worksheet issue
 about: 'Yassin''s RA Worksheet '
 title: ''
 labels: ''
