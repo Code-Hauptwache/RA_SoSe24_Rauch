@@ -20,6 +20,12 @@ This repository contains the solutions for the exercises in the Computer Archite
     To use MARS, Java must be installed on your system. Use one of the following commands to install Java:
 
     ```sh
+    sudo apt update
+    sudo apt install default-jdk
+    ```
+
+    Alternatively, you can use the specific version commands:
+    ```sh
     sudo apt install openjdk-11-jre-headless   # Version 11
     sudo apt install openjdk-17-jre-headless   # Version 17
     ```
@@ -29,12 +35,25 @@ This repository contains the solutions for the exercises in the Computer Archite
     - [Download Mars.jar](http://courses.missouristate.edu/KenVollmar/MARS/)
     - [Professor's Website](https://www.informatik.fb2.frankfurt-university.de/~rauch/)
 
-    After downloading, start it with the following command:
+    Alternatively, you can use the unofficial version of MARS that supports themes:
+    - [MARS Theme Engine Releases](https://github.com/aeris170/MARS-Theme-Engine/releases)
+    - [MARS Theme Engine GitHub Repository](https://github.com/aeris170/MARS-Theme-Engine)
 
+    **Note**: This repository uses the unofficial version of MARS, which can be found in the `head` directory named `Mars4_5_1_1Unofficial.jar`. This version has dark mode and customized text colors. You can use this version without installing MARS yourself.
+
+    To start MARS, you can use the following command:
     ```sh
     java -jar Mars.jar
     ```
+    If you are using the version from this repository, use:
+    ```sh
+    java -jar head/Mars4_5_1_1Unofficial.jar
+    ```
 
+    If you want to open MARS from another path, simply replace `<path>` with the actual path to the `Mars.jar` file:
+    ```sh
+    java -jar <path>/Mars.jar
+    ```
 ## Running `.asm` files in MARS
 
 1. **Create a new MIPS assembly file**:
