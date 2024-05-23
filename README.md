@@ -39,7 +39,7 @@ This repository contains the solutions for the exercises in the Computer Archite
     - [MARS Theme Engine Releases](https://github.com/aeris170/MARS-Theme-Engine/releases)
     - [MARS Theme Engine GitHub Repository](https://github.com/aeris170/MARS-Theme-Engine)
 
-    **Note**: This repository uses the unofficial version of MARS, which can be found in the `head` directory named `Mars4_5_1_1Unofficial.jar`. This version has dark mode and customized text colors. You can use this version without installing MARS yourself.
+    **Note**: This repository uses the unofficial version of MARS, which can be found in the `head` directory named `Mars4_5_1_1Unofficial.jar`. You can use this version without installing MARS yourself.
 
     To start MARS, you can use the following command:
     ```sh
