@@ -1,10 +1,10 @@
 main:
     # Initialize arguments
-    ori     $4, $0, 0       	# Initialize r4 to 17
-    ori     $5, $0, 0			# Initialize r5 to 51
+    ori     $4, $0, 0		# Initialize r4 to 17
+    ori     $5, $0, 0		# Initialize r5 to 51
 
     # Call the subroutine
-	jal     getGCD           	# Jump and link to subroutine "getGCD"
+	jal     getGCD          # Jump and link to subroutine "getGCD"
 
     # End of program
 end:
