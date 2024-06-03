@@ -1,7 +1,7 @@
 main:
     # Initialize arguments
-    ori     $4, $0, 210       	# Initialize r4 to 17
-    ori     $5, $0, 28		# Initialize r5 to 51
+    ori     $4, $0, 30       	# Initialize r4 to 17
+    ori     $5, $0, 25		# Initialize r5 to 51
 
     # Call the subroutine
     jal     getGCD           	# Jump and link to subroutine "getGCD"
@@ -12,7 +12,8 @@ end:
 
 
 # Subroutine to calculate GCD
-getGCD:    
+getGCD:
+    or	    $2, $0, $5    	# Initialize r2 with the value in r5
     beq     $4, $0, end      	# If r4 == 0, go to end (loop)
     beq     $5, $0, storeGCD 	# If r5 == 0, go to storeGCD
 
