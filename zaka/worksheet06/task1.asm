@@ -6,4 +6,6 @@ main:
 	
 	
 	
+	# Subroutine to turn letters to lower case
+strToLower:
 	
