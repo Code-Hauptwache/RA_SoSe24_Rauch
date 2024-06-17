@@ -24,7 +24,7 @@
 	mflo 	$18
 	mfhi	$19	
 	addiu 	$20,$15,1
-	addi 	$21,$15,1
+	addiu	$21,$15,1
 	clo 	$22,$11
 	clo	$23,$14
 	
