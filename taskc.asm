@@ -24,7 +24,7 @@ sub_sub_r4:
     	j loop_sub               	# goto loop_sub
 
 set_sub_r2:
-   	add $2, $4,$0           		# r2 <-- r4
+   	add $2, $4,$0           	# r2 <-- r4
 
 end_sub:
-    	jr $ra                  		# Rückkehr zum Aufrufer
+    	jr $ra                  	# Rückkehr zum Aufrufer
