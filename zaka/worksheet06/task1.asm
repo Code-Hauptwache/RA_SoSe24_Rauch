@@ -1,11 +1,45 @@
-	.data
-str:	.asciiz	"TEST String!"
+.data
+
+str:    .asciiz "TEST String!"
+
+.text							# Code section
+.globl main						# Declare main as global for the linker
 
 main:
-	# Call subroutine	
-	la	$a0, str			# load adress of str
-	jal	strToLower			# Jump and link to subroutine "strToLower"
-	
-	# Subroutine to turn letters to lower case
+    	# Load the address of str into $a0
+    	la 	$a0, str  				# Load the adress of str
+    	jal 	strToLower  				# Call subroutine to convert first letter to lowercase
+
+
+    	# Exit program
+	li	$v0, 10
+	syscall
+
 strToLower:
-	slt	
+	li	$t0, 'A'				# Load ASCII value of 'A' into $t0
+	li	$t1, 'a'				# Load ASCII value of 'a' into $t1
+	sub	$t2, $t1, $t0				# Load difference between 'a' and 'A' into $t2
+	
+# Loop to turn every capital letter in a string to lowercase
+loop:
+    	lb 	$t3, ($a0)  				# Load the current byte (character) of str into $t3
+	
+	beq	$t3, $zero, end				# If $t3 == '\0' jump to end
+
+	slt	$t4, $t3, $t0 				# If $t3 < 'A' set $t4 to 1
+    	slt	$t5, $t1, $t3 				# If $t3 > 'Z' set $t5 to 1
+    	
+	# If capital letter jumpt to lowercase ($t4 and $t5 == 0)
+	bne	$t4, $t5, nextChar			# If current char is not capital jump to nextChar
+	j	lowercase				# Else jump to lowercase
+	
+lowercase:
+	add	$t3, $t3, $t2				# Turn capital letter to lowercase
+	sb	$t3, ($a0)
+
+nextChar:
+	addi	$a0, $a0, 1				# Increment adress of str to point to the next char in string
+	j	loop	
+
+end:
+	jr	$ra					# Return from subroutine
