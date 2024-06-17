@@ -1,20 +1,25 @@
 .data
 
-str:    .asciiz "TEST String!"
+str_a:	.asciiz "TEST String!"
+str_b:	.asciiz "in situ"
 
 .text							# Code section
 .globl main						# Declare main as global for the linker
 
 main:
-    	# Load the address of str into $a0
-    	la 	$a0, str  				# Load the adress of str
-    	jal 	strToLower  				# Call subroutine to convert first letter to lowercase
-
+    	# Load the address of str_a into $a0 and call strToLower
+    	la 	$a0, str_a 
+    	jal 	strToLower  				
+	
+	# Load the adress of str_b into $a0 and call strTurnAround
+	la	$a0, str_b
+	jal	strTurnAround
 
     	# Exit program
 	li	$v0, 10
 	syscall
 
+# Subroutine strToLower(char*)
 strToLower:
 	li	$t0, 'A'				# Load ASCII value of 'A' into $t0
 	li	$t1, 'a'				# Load ASCII value of 'a' into $t1
@@ -43,3 +48,7 @@ nextChar:
 
 end:
 	jr	$ra					# Return from subroutine
+
+# Subroutine strTurnAround(cahr*)
+strTurnAround:
+	
