@@ -1,22 +1,22 @@
 main:
     # Initialize arguments and Call the subroutine
-    ori     $4, $0, 25       	# Initialize r4 to 17
-    ori     $5, $0, 30			# Initialize r5 to 51
+    ori     $4, $0, 25       	# Initialize r4 to 25
+    ori     $5, $0, 35			# Initialize r5 to 35
     jal     getGCD           	# Jump and link to subroutine "getGCD"
 
     # Initialize arguments and Call the subroutine
-    ori     $4, $0, 210       	# Initialize r4 to 17
-    ori     $5, $0, 28			# Initialize r5 to 51
+    ori     $4, $0, 210       	# Initialize r4 to 210
+    ori     $5, $0, 28			# Initialize r5 to 28
     jal     getGCD           	# Jump and link to subroutine "getGCD"
 
     # Initialize arguments and Call the subroutine
-    ori     $4, $0, 49       	# Initialize r4 to 17
-    ori     $5, $0, 42			# Initialize r5 to 51
+    ori     $4, $0, 49       	# Initialize r4 to 49
+    ori     $5, $0, 42			# Initialize r5 to 42
     jal     getGCD           	# Jump and link to subroutine "getGCD"
 
     # Initialize arguments and Call the subroutine
     ori     $4, $0, 17       	# Initialize r4 to 17
-    ori     $5, $0, 3			# Initialize r5 to 51
+    ori     $5, $0, 3			# Initialize r5 to 3
     jal     getGCD           	# Jump and link to subroutine "getGCD"
 
     # Initialize arguments and Call the subroutine
