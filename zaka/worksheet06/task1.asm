@@ -2,6 +2,7 @@
 
 str_a:	.asciiz "TEST String!"
 str_b:	.asciiz "in situ"
+str_c:	.asciiz	"Rotator"
 
 .text							# Code section
 .globl main						# Declare main as global for the linker
@@ -14,6 +15,14 @@ main:
 	# Load the adress of str_b into $a0 and call strTurnAround
 	la	$a0, str_b
 	jal	strTurnAround
+	
+	# Load the adress of str_b into $a0 and call strIsPalindrom
+	la	$a0
+	jal	strIsPalindrom
+	
+	# Load the adress of str_c into $a0 and call strIsPalindrom
+	la	$a0, str_c
+	jal	strIsPalindorm
 
     	# Exit program
 	li	$v0, 10
@@ -50,65 +59,37 @@ strToLower_end:
 	jr	$ra					# Return from subroutine
 
 # Subroutine strTurnAround(char*)
-
 strTurnAround:
-
-    move    $t3, $a0           # $t3 = address of the string (start_ptr)
-
-    li      $t0, 0             # $t0 = string length counter (initially 0)
-
-
+    move    $t3, $a0					# $t3 = address of the string (start_ptr)
+    li      $t0, 0					# $t0 = string length counter (initially 0)
 
 # Loop to get the length of the given string
-
 getStrLen:
-
-    lb      $t4, 0($t3)        # Load byte from address $t3 into $t4
-
-    beq     $t4, $zero, turnAround # If current char == '\0' goto turnAround
-
-    addi    $t0, $t0, 1        # Increment string length count
-
-    addi    $t3, $t3, 1        # Move to the next character
-
-    j       getStrLen          # Jump to getStrLen
-
-
+    lb      $t4, ($t3)					# Load byte from address $t3 into $t4
+    beq     $t4, $zero, turnAround			# If current char == '\0' goto turnAround
+    addi    $t0, $t0, 1					# Increment string length count
+    addi    $t3, $t3, 1					# Move to the next character
+    j       getStrLen					# Jump to getStrLen
 
 turnAround:
-
-    subu    $t1, $t3, 1        # Set $t1 to point at the last character ($t3 points at '\0')
-
-    move    $t2, $a0           # $t2 = start_ptr for swapping
-
-    
+    subu    $t1, $t3, 1					# Set $t1 to point at the last character ($t3 points at '\0')
+    move    $t2, $a0					# $t2 = start_ptr for swapping
 
 # Loop to swap characters
-
 swapLoop:
+    bge     $t2, $t1, strTurnAround_end			# If start_ptr >= end_ptr, end the loop
 
-    bge     $t2, $t1, strTurnAround_end # If start_ptr >= end_ptr, end the loop
+    lb      $t4, ($t2)					# Load byte from start_ptr into $t4
+    lb      $t5, ($t1)					# Load byte from end_ptr into $t5
+    sb      $t5, ($t2)					# Store byte from $t5 into start_ptr
+    sb      $t4, ($t1)					# Store byte from $t4 into end_ptr
 
-    
-
-    lb      $t4, 0($t2)        # Load byte from start_ptr into $t4
-
-    lb      $t5, 0($t1)        # Load byte from end_ptr into $t5
-
-    sb      $t5, 0($t2)        # Store byte from $t5 into start_ptr
-
-    sb      $t4, 0($t1)        # Store byte from $t4 into end_ptr
-
-    
-
-    addi    $t2, $t2, 1        # Increment start_ptr
-
-    subi    $t1, $t1, 1        # Decrement end_ptr
-
-    j       swapLoop           # Jump to swapLoop
-
-
+    addi    $t2, $t2, 1					# Increment start_ptr
+    subi    $t1, $t1, 1					# Decrement end_ptr
+    j       swapLoop					# Jump to swapLoop
 
 strTurnAround_end:
+    jr      $ra						# Return from subroutine
 
-    jr      $ra                # Return from subroutine
+# Subroutine strIsPalindorm(char*)
+strIsPalindorm:
