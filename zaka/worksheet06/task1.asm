@@ -17,8 +17,8 @@ main:
 	jal	strTurnAround
 	
 	# Load the adress of str_b into $a0 and call strIsPalindrom
-	la	$a0
-	jal	strIsPalindrom
+#	la	$a0, str_b
+#	jal	strIsPalindrom
 	
 	# Load the adress of str_c into $a0 and call strIsPalindrom
 	la	$a0, str_c
@@ -33,6 +33,7 @@ strToLower:
 	li	$t0, 'A'				# Load ASCII value of 'A' into $t0
 	li	$t1, 'a'				# Load ASCII value of 'a' into $t1
 	sub	$t2, $t1, $t0				# Load difference between 'a' and 'A' into $t2
+	li	$t6, 'Z'				# Load ASCII value of 'Z' into $t6
 	
 # Loop to turn every capital letter in a string to lowercase
 loop:
@@ -41,7 +42,7 @@ loop:
 	beq	$t3, $zero, strToLower_end		# If $t3 == '\0' jump to strToLower_end
 
 	slt	$t4, $t3, $t0 				# If $t3 < 'A' set $t4 to 1
-    	slt	$t5, $t1, $t3 				# If $t3 > 'Z' set $t5 to 1
+    	slt	$t5, $t6, $t3 				# If $t3 > 'Z' set $t5 to 1
     	
 	# If capital letter jumpt to lowercase ($t4 and $t5 == 0)
 	bne	$t4, $t5, nextChar			# If current char is not capital jump to nextChar
