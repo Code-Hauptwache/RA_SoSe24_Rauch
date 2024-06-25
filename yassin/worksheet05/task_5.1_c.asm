@@ -3,26 +3,10 @@ main:
     	ori	$5,$0,35       		# r5 <-- 35
     	jal	gcd           		# Aufruf des Unterprogramms
     					# Prüfen Sie den Rückgabewert in r2
-    					   
-    					# Wiederholen für andere Zahlenpaare
-    	ori	$4,$0,210
-    	ori	$5,$0,28
-   	jal	gcd
-   	
-   	ori	$4,$0,49
-   	ori	$5,$0,42
-   	jal	gcd
-   	
-   	ori	$4,$0,17
-   	ori	$5,$0,3
-   	jal 	gcd
-   	
-   	ori	$4,$0,17
-   	ori	$5,$0,51
-   	jal	gcd
-   	
+    					
 end_main:
-    	j	end_main       		# Endlosschleife
+    	j	end_main   
+    	
     	
 gcd:
     	add	$2, $5,$0   		# r2 <-- r5
