@@ -1,11 +1,17 @@
 .data 
 str_a:	.asciiz	"TEST Wort!" 
+str_b:	.asciiz "in situ"
 
 .text
 main:	
 	la	$a0, str_a
 	jal	strtolower
 	
+	# str_b 
+	la	$a0, str_b
+	jal	strturnaround
+	
+
 	
 # subroutine strtolower(char*)
 strtolower:		
@@ -31,3 +37,20 @@ next:
 	j	loop	
 end:
 	jr	$ra
+	
+#subroutine strturnaround(char*)
+strturnaround:
+	move	$t3, $a0	# $t3 == aktuelle char von adresse str_b
+	li	$t0, 0
+# Länge des str bestimmen
+strlänge:
+	lb	$t4, $t3		# lb von adresse $t3 in $t4 
+	beq	$t4, $zero,turn		# $t4 == 0 goto turn	
+	addi	$t3, $t3, 1		# char um 1 erhöhen
+	j	strlänge
+	
+turn:
+	
+		
+end:
+	
