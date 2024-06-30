@@ -18,9 +18,7 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y default-jre
 
       - name: Download MARS
-        run: |
-          git clone https://github.com/qaisjp/myMARS.git
-          mv myMARS/Mars4_5.jar mars.jar
+        run: wget -O mars.jar https://github.com/qaisjp/myMARS/releases/download/v2018-10-03/myMARS.jar
 
       - name: Run all .asm files
         run: |
