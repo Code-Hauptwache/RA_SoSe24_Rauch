@@ -1,4 +1,4 @@
-name: MIPS CI
+name: MARS CI
 
 on:
   push:
@@ -14,12 +14,15 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Install dependencies
-        run: sudo apt-get update && sudo apt-get install -y spim
+      - name: Install Java
+        run: sudo apt-get update && sudo apt-get install -y default-jre
+
+      - name: Download MARS
+        run: wget -O mars.jar https://github.com/ThomasWaldmann/marsshmallow/raw/main/jar/Mars4.5.jar
 
       - name: Run all .asm files
         run: |
           find . -name '*.asm' -print | while read asm_file; do
             echo "Running $asm_file"
-            spim -file "$asm_file"
+            java -jar mars.jar nc "$asm_file"
           done
