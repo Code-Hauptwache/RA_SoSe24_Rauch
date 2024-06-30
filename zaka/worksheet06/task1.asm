@@ -3,36 +3,41 @@
 str1:	.asciiz	"Lager"
 str2:	.asciiz	"Regal"
 str3:	.space	10
+	.byte	0
 	.byte	0xff
 	.byte	0xff
 
 .text							# Code section
 .globl main						# Declare main as global for the linker
 
-# TODO: Change arguments and subroutine calls
 main:
-    	# Load the address of str_a into $a0 and call strToLower
-    	la 	$a0, str_a 
-    	jal 	strToLower  				
-	
-	# Load the adress of str_b into $a0 and call strTurnAround
-	la	$a0, str_b
-	jal	strTurnAround
-	
-	# Load the adress of str_b into $a0 and call strIsPalindrom
-	la	$a0, str_b
-	jal	strIsPalindorm
-	
-	# Load the adress of str_c into $a0 and call strIsPalindrom
-	la	$a0, str_c
-	jal	strIsPalindorm
-	
-	# Load arguments and call strCat
-	la	$a0, str_b				# Load str_b into $a0
-	la	$a1, str_c				# Load str_c into $a1
-	jal	strCat					# Call the subroutine strCat
+	# Convert str1 to lowercase
+	la	$a0, str1
+	jal	strToLower
 
-    	# Exit program
+	# Convert str2 to lowercase
+	la	$a0, str2
+	jal	strToLower
+
+	# Reverse str1
+	la	$a0, str1
+   	jal	strTurnAround
+
+	# Reverse str2
+	la	$a0, str2
+	jal	strTurnAround
+
+	# Concatenate str1 and str2 into str3
+	la	$a0, str1
+	la	$a1, str2
+	la	$a2, str3
+	jal	strCat
+
+	# Check if str3 is a palindrome
+	la	$a0, str3
+	jal	strIsPalindorm
+
+	# Exit program
 	li	$v0, 10
 	syscall
 
@@ -65,7 +70,7 @@ nextCharTL:
 	j	loop	
 
 strToLower_end:
-	jr	$ra					# Return from subroutine
+	jr	$ra					# Return from subroutine strToLower
 
 # Subroutine strTurnAround(char* str)
 strTurnAround:
@@ -98,7 +103,7 @@ swapLoop:
 	j       swapLoop				# Jump to swapLoop
 
 strTurnAround_end:
-	jr      $ra					# Return from subroutine
+	jr      $ra					# Return from subroutine strTurnAround
 
 # Subroutine strIsPalindorm(char* str)
 strIsPalindorm:
@@ -133,12 +138,39 @@ nextCharPA:
 	
 returnIsPalindrom:
 	addi	$v0, $zero, 1				# set $v0 to true
-	jr	$ra					# Return form subroutine
+	jr	$ra					# Return form subroutine strIsPalindorm
 
 returnIsNotPalindorm:
 	move	$v0, $zero				# set $v0 to false
-	jr	$ra					# Return form subroutine
+	jr	$ra					# Return form subroutine strIsPalindorm
 
 # Subroutine strCat(cahr* result, char* str1, char* str3)
 strCat:
+	move	$t0, $a0				# Move adress of the first given string into $t0 (str1_ptr)
+	move	$t1, $a1				# Move adress of the second given string into $t1 (str2_ptr)
+	move	$t2, $a2				# Move adress of the third given string into $t2 (str3_ptr)
 	
+catStr1Loop:
+	lb	$t3, ($t0)				# Load current byte from str1_ptr into $t3
+	beq	$t3, $zero, catStr2Loop			# If $t3 == '0' goto catStr2Loop
+	
+	sb	$t3, ($t2)				# Store current byte in str3
+	
+	addi	$t0, $t0, 1				# Increment str1_ptr to point at the next char
+	addi	$t2, $t2, 1				# Increment str3_ptr to point at the next space
+	
+	j	catStr1Loop				# Jump to catStr1Loop
+	
+catStr2Loop:
+	lb	$t3, ($t1)				# Load current byte from str2_ptr into $t3
+	beq	$t3, $zero, strCat_end			# If $t3 == '0' goto strCat_end
+	
+	sb	$t3, ($t2)				# Store current byte in str3
+	
+	addi	$t1, $t1, 1				# Increment str2_ptr to point at the next char
+	addi	$t2, $t2, 1				# Increment str3_ptr to point at the next space
+	
+	j	catStr2Loop				# Jump to catStr2Loop
+
+strCat_end:
+	jr	$ra					# Return form subroutine strCat
