@@ -1,0 +1,25 @@
+name: MIPS CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: sudo apt-get update && sudo apt-get install -y spim
+
+      - name: Run all .asm files
+        run: |
+          find . -name '*.asm' -print | while read asm_file; do
+            echo "Running $asm_file"
+            spim -file "$asm_file"
+          done
