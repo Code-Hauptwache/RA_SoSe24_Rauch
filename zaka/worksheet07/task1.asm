@@ -9,7 +9,7 @@ enterChar:
 	.asciiz	"Please enter a single character: "
 charCountOutput:
 	.asciiz	"\nCharacter count: "
-askRunAgain:
+askRunAgainStr:
 	.asciiz	"\nAgain (y)? "
 str:	.space	BUFFER_SIZE				
 char:	.space	BYTE_SIZE
@@ -57,23 +57,23 @@ main:
 	
 	# Ask whether the program should be run again
 askAgain:
-	la	$a0, askRunAgain
+	la	$a0, askRunAgainStr
 	li	$v0, 4
 	syscall
 	
 	li	$v0, 12
 	syscall
 	
-	li	$t0, 'y'
-	li	$t1, 'n'
+	li	$t0, 'y'				#  Load the ASCII value of 'y' into $t0
+	li	$t1, 'n'				# Load the ASCII value of 'n' into $t1
 	
-	beq	$v0, $t0, main
-	beq	$v0, $t1, end_main
-	j	askAgain
+	beq	$v0, $t0, main				# If the input character is 'y', branch to main
+	beq	$v0, $t1, end_main			# If the input character is 'n', branch to end_main
+	j	askAgain				# Else repeat askAgain
 	
 end_main:
-	li	$v0, 10
-	syscall
+	li	$v0, 10					# Load the syscall code for exiting the program into $v0
+	syscall						# Make the syscall to exit the program
 
 # Subroutine ncStr(cahr *str, char c)
 ncStr:
