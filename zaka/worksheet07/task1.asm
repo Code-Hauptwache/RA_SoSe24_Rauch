@@ -81,7 +81,7 @@ ncStr:
 	lb	$t1, ($a1)				# Load the byte that should be checked for occurrence in the given string
 	move	$t2, $zero				# (charCount) : $t2 = 0 Initialize counter to 0
 	
-# Loop to count the number of `c` in the given string
+	# Loop to count the number of `c` in the given string
 countCharInStr:
 	lb	$t3, ($t0)				# Load current byte of given string into $t3
 	
