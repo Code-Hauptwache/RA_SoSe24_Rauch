@@ -1,10 +1,79 @@
+.eqv	BUFFER_SIZE, 128				# Define BUFFER_SIZE as 128
+.eqv	BYTE_SIZE, 2					# Define BYTE_SIZE as 1
+
 .data
+
+enterStr:
+	.asciiz	"\nPlease enter a string: "
+enterChar:
+	.asciiz	"Please enter a single character: "
+charCountOutput:
+	.asciiz	"\nCharacter count: "
+askRunAgain:
+	.asciiz	"\nAgain (y)? "
+str:	.space	BUFFER_SIZE				
+char:	.space	BYTE_SIZE
 
 .text							# Code section
 .globl main						# Declare main as global for the linker
 
 main:
+	# Print user to enter a string
+	la	$a0, enterStr				# Load the adress of enterStr into $a0
+	li	$v0, 4					# Load the syscall code for printing a string
+	syscall						# Make the syscall
+	
+	# Get a string from user input
+	la	$a0, str				# Load the address of str into $a0
+	li	$a1, BUFFER_SIZE			# Load the value of BUFFER_SIZE into $a1
+	li	$v0, 8					# Load the syscall code for reading a string into $v0
+	syscall						# Make the syscall
+	
+	#Print user to enter a char
+	la	$a0, enterChar				# Load the adress of enterChar into $a0
+	li	$v0, 4					# Load the syscall code for printing a string
+	syscall						# Make the syscall
 
+	# Get a char from user input
+	li	$v0, 12					# Load the syscall code for reading a char
+	syscall						# Make the syscall
+	sb	$v0, char				# Store the read character in the address of char
+	
+	# Load arguments and call ncStr
+	la	$a0, str				# Load the adress of str into $a0
+	la	$a1, char				# Load the adress of char into $a1
+	jal	ncStr					# Jump and linke to subroutine ncStr
+	
+	# Print the number of character `char` found in str
+	move	$t0, $v0
+	
+	la	$a0, charCountOutput
+	li	$v0, 4
+	syscall
+	
+	move	$a0, $t0				# Move the count from $t0 to $a0
+	li	$v0, 1					# Load the syscall code for printing an integer
+	syscall
+	
+	# Ask whether the program should be run again
+askAgain:
+	la	$a0, askRunAgain
+	li	$v0, 4
+	syscall
+	
+	li	$v0, 12
+	syscall
+	
+	li	$t0, 'y'
+	li	$t1, 'n'
+	
+	beq	$v0, $t0, main
+	beq	$v0, $t1, end_main
+	j	askAgain
+	
+end_main:
+	li	$v0, 10
+	syscall
 
 # Subroutine ncStr(cahr *str, char c)
 ncStr:
