@@ -1,14 +1,27 @@
 .data 
 str_a:	.asciiz	"TEST Wort!" 
 str_b:	.asciiz "in situ"
+str3:	.space	10
+	.byte	0
+	.byte	0xff
+	.byte	0xff
 
 .text
+.globl main
+
 main:	
 	la	$a0, str_a
 	jal	strtolower
 	
-	# str_b 
+	la	str_b
+	jal	strtolower
+	
+	# str_b umkehren
 	la	$a0, str_b
+	jal	strturnaround
+	
+	# umkehren str_a
+	la	$a0, str_a
 	jal	strturnaround
 	
 
@@ -46,11 +59,45 @@ strturnaround:
 strlänge:
 	lb	$t4, $t3		# lb von adresse $t3 in $t4 
 	beq	$t4, $zero,turn		# $t4 == 0 goto turn	
+	addi	$t0, $t0, 1		# erhöhen von strlänge um 1
 	addi	$t3, $t3, 1		# char um 1 erhöhen
 	j	strlänge
 	
 turn:
+	subi	$t1, $t3, 1		
+	move	$t2, $a0
 	
+swap:
+	bge	$t2, $t1, strturnaround
+	
+	lb	$t4, ($t2)
+	lb	$t5, ($t1)
+	sb	$t5, ($t2)
+	sb	$t4, ($t1)
+	
+	addi	$t2, $t2, 1
+	subi	$t1, $t1, 1
+	j	swap
+
+strlänge_end:
+	jr	$ra
+	
+strispalindrom:
+	move	$t0, $a0
+	li	$t1, 0
+	
+strlängePA:
+	lb	$t2, ($t0)
+	beq	$t2, $zero, checkPA
+	addi	$t1, $t1, 1
+	addi	$t0, $t0, 1
+	j	strlängePA
 		
-end:
+checkPA:
+	subi	$t0, $t0, 1
+	move	$t3, $a0
+	
+checkPAloop:
+
+	
 	
