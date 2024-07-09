@@ -76,10 +76,10 @@ printSolutionOne:
 	li	$a0, 1
 	li	$v0, 1
 	syscall						# Print 1
-	jal	printColon_str				# Print content fo colon_str
+	jal	printColon_str				# Print content of colon_str
 	mov.d	$f12, $f0
 	li	$v0, 3
-	syscall
+	syscall						# Print content of f1:f0
 	
 	beq	$t3, $t1, printSolutionTwo		# If $t3 (checkIfTwoSolutions) == 1 (true) goto printSolutionTwo
 	j	main_end				# Else goto main_end
@@ -99,7 +99,7 @@ printSolutionTwo:
 	jal	printColon_str				# Print content fo colon_str
 	mov.d	$f12, $f2
 	li	$v0, 3
-	syscall						# Print content of $f2
+	syscall						# Print content of f3:f2
 
 	# End program	
 main_end:
