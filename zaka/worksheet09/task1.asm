@@ -65,9 +65,9 @@ main:
 	
 	li	$t1, 1
 	li	$t2, 2
-	beq	$t0, $t1, printSolutionOne		# If solutionCount == 1 goto printOneSolution
+	beq	$t0, $t1, printSolutionOne		# If solutionCount == 1 goto printSolutionOne
 	seq	$t3, $t0, $t2				# If solutionCount == 2 set $t3 (checkIfTwoSolutions) == 1
-	beq	$t3, $t1, printSolutionOne		# If $t3 (checkIfTwoSolutions) == 1 goto printOneSolution
+	beq	$t3, $t1, printSolutionOne		# If $t3 (checkIfTwoSolutions) == 1 goto printSolutionOne
 	j	main_end				# Else goto main_end
 	
 printSolutionOne:
@@ -77,9 +77,9 @@ printSolutionOne:
 	li	$v0, 1
 	syscall						# Print 1
 	jal	printColon_str				# Print content fo colon_str
-	mfc1.d	$a0, $f0
-	li	$v0, 1
-	syscall						# Print content of $f0
+	mov.d	$f12, $f0
+	li	$v0, 3
+	syscall
 	
 	beq	$t3, $t1, printSolutionTwo		# If $t3 (checkIfTwoSolutions) == 1 (true) goto printSolutionTwo
 	j	main_end				# Else goto main_end
@@ -97,8 +97,8 @@ printSolutionTwo:
 	li	$v0, 1
 	syscall						# Print 2
 	jal	printColon_str				# Print content fo colon_str
-	mfc1.d	$a0, $f2
-	li	$v0, 1
+	mov.d	$f12, $f2
+	li	$v0, 3
 	syscall						# Print content of $f2
 
 	# End program	
@@ -110,7 +110,7 @@ main_end:
 quadSolve:
 	# Initialize registers for results
 	l.d	$f0, const0_double			# $f0 (solutionOne) == 0
-	l.d	$f2, const0_double			# $f1 (solutionTwo) == 0
+	l.d	$f2, const0_double			# $f2 (solutionTwo) == 0
 	li	$v0, 0					# $v0 (solutionCount) == 0
 	
 	# Initialize constans for calculations
