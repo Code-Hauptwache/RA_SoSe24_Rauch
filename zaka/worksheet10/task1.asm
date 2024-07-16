@@ -33,12 +33,14 @@ main:
 	# Else calculate the Exponential number
 	li	$t9, 1					# Initialize $t9 (result) = 1
 calcExpNum_loop:
-	beq	
+	beq	$zero, $t1, printResult
 
 exponentIsLessThenZero:
 	la	$a0, printExpIsNeg_str
 	li	$v0, 4
 	syscall						# Print content of printExpIsNeg_str
+	
+printResult:
 	
 main_end:
 	li	$v0, 10
